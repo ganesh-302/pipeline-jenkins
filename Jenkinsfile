@@ -18,8 +18,9 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                    python -m pip install -r requirements.txt
-                    python -m unittest Test.py
+                    apt-get update && apt-get install -y python3 python3-pip || true
+                    python3 -m pip install -r requirements.txt
+                    python3 -m unittest Test.py
                 '''
             }
         }
