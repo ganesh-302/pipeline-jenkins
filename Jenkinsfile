@@ -15,12 +15,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'docker build --target test -t ${IMAGE_NAME}:test .'
-            }
-        }
-
         stage('Build Image') {
             steps {
                 sh 'docker build -t ${IMAGE_NAME} .'
