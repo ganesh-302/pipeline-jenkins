@@ -18,9 +18,11 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-                    apt-get update && apt-get install -y python3 python3-pip || true
-                    python3 -m pip install -r requirements.txt
-                    python3 -m unittest Test.py
+                    docker run --rm \
+                    -v ${WORKSPACE}:/app \
+                    -w /app \
+                    python:3.11 \
+                    bash -c "pip install -r requirements.txt && python -m unittest Test.py"
                 '''
             }
         }
