@@ -17,21 +17,21 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'docker build --target test -t ${IMAGE_NAME}:test .'
+                sh 'sudo docker build --target test -t ${IMAGE_NAME}:test .'
             }
         }
 
         stage('Build Image') {
             steps {
-                sh 'docker build -t ${IMAGE_NAME} .'
+                sh 'sudo docker build -t ${IMAGE_NAME} .'
             }
         }
 
         stage('Remove Old Container') {
             steps {
                 sh '''
-                    docker stop ${CONTAINER_NAME} || true
-                    docker rm ${CONTAINER_NAME} || true
+                    sudo docker stop ${CONTAINER_NAME} || true
+                    sudo docker rm ${CONTAINER_NAME} || true
                 '''
             }
         }
@@ -39,7 +39,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 sh '''
-                    docker run -d \
+                    sudo docker run -d \
                     --name ${CONTAINER_NAME} \
                     -p ${PORT}:${PORT} \
                     ${IMAGE_NAME}
