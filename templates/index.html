@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Registration</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .container { width: 100%; max-width: 680px; }
+    h1 { color: #2c3e50; margin-bottom: 24px; font-size: 28px; }
+    h2 { color: #2c3e50; margin: 28px 0 16px; font-size: 20px; }
+
+    .alert {
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .alert-error   { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+    form {
+      background: white;
+      padding: 28px;
+      border-radius: 8px;
+      border: 1px solid #dde1e7;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 6px;
+      margin-top: 16px;
+    }
+    label:first-of-type { margin-top: 0; }
+    input[type="text"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      background: #fafafa;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #4CAF50;
+      background: white;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #43a047; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #dde1e7;
+    }
+    th {
+      background: #4CAF50;
+      color: white;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 14px;
+    }
+    td {
+      padding: 11px 16px;
+      font-size: 14px;
+      border-top: 1px solid #eee;
+      color: #333;
+    }
+    tr:hover td { background: #f9f9f9; }
+  </style>
+</head>
+<body>
+  <main class="container">
+
+    <h1>Event Registration Portal</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" role="status">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+  <form method="POST" action="/">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+    <label for="event">Select Event</label>
+    <select id="event" name="event" required>
+      <option value="" disabled selected>-- Choose an event --</option>
+      <option value="Tech Conference 2025">Tech Conference 2025</option>
+      <option value="AI and ML Workshop">AI and ML Workshop</option>
+      <option value="DevOps Bootcamp">DevOps Bootcamp</option>
+      <option value="Cloud Fundamentals">Cloud Fundamentals</option>
+    </select>
+
+    <button type="submit">Register Now</button>
+  </form>
+
+  {% if registrations %}
+  <h2>Registered Participants ({{ registrations|length }})</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Event</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in registrations %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ r.name }}</td>
+        <td>{{ r.email }}</td>
+        <td>{{ r.event }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  </main>
+</body>
+</html>
