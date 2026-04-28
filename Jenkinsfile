@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "my-pipeline-app"
-        CONTAINER_NAME = "my-app"
+        IMAGE_NAME = "pipeline-app"
+        CONTAINER_NAME = "pipeline-container"
         PORT = "7002"
     }
 
@@ -44,10 +44,10 @@ pipeline {
 
     post {
         success {
-            echo " App deployed at http://localhost:${PORT}"
+            echo "App deployed at http://localhost:${PORT}"
         }
         failure {
-            echo " Pipeline failed. Check logs above."
+            echo "Pipeline failed. Check logs above."
         }
     }
 }
