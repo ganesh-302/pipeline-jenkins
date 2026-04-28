@@ -17,13 +17,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh '''
-                    docker run --rm \
-                    -v ${WORKSPACE}:/app \
-                    -w /app \
-                    python:3.11 \
-                    bash -c "pip install -r requirements.txt && python -m unittest Test.py"
-                '''
+                sh 'docker build --target test -t ${IMAGE_NAME}:test .'
             }
         }
 
