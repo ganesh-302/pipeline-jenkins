@@ -15,6 +15,15 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                sh '''
+                    python -m pip install -r requirements.txt
+                    python -m unittest Test.py
+                '''
+            }
+        }
+
         stage('Build Image') {
             steps {
                 sh 'docker build -t ${IMAGE_NAME} .'
